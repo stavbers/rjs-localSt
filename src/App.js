@@ -3,8 +3,22 @@ import {Item} from './components/Item'
 import './App.css';
 
 function App() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState([])
+    const [datarr, setdDatarr] = useState([])
+    function AddLocalSt(...args){
+      setdDatarr((prev)=> {return prev + args})
+    }
+        useEffect(() => {
+            localStorage.setItem('items', JSON.stringify(datarr));
+        },[datarr]);
+        
 
+    // useEffect(() => {
+    //     const items = JSON.parse(localStorage.getItem('items'));
+    //     if (items) {
+    //         setItems2(items2);
+    //     }
+    // }, [items2]);
     useEffect(() => {
         fetch('https://api.stavbers.site/city')
             .then((resp) => resp.json())
@@ -16,7 +30,7 @@ function App() {
 
         <div className='App'>
             {data.map((el) => {
-              return  <Item key={el.id} {...el}/>
+              return  <Item key={el.id} {...el} AddLocalSt={AddLocalSt}/>
             })}
         </div>
     );
