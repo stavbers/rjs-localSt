@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { elmStyle, myBtn } from '../Style';
 function Item(props) {
     const { id, img, name, population, info, AddLocalSt } = props;
-    const [elem, setElem] = useState([]);
+    // const [elem, setElem] = useState([]);
 
     return (
         <div id={id} style={elmStyle} className='elem'>
@@ -13,7 +13,7 @@ function Item(props) {
             <button
                 style={myBtn}
                 onClick={() => {
-                  AddLocalSt(id, name)
+                  AddLocalSt(props)
                 }}
             >
                 like

@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import {Item} from './components/Item'
+import { Item } from './components/Item';
 import './App.css';
 
 function App() {
-    const [data, setData] = useState([])
-    const [datarr, setdDatarr] = useState([])
-    function AddLocalSt(...args){
-      setdDatarr((prev)=> {return prev + args})
+    const [data, setData] = useState([]);
+    const [datarr, setdDatarr] = useState(()=> {
+      const saved = localStorage.getItem("hyeta")
+      const initialValue = JSON.parse(saved)
+      return initialValue || []
+    })
+
+    function AddLocalSt(props) {
+        setdDatarr((prev) => [...prev, { el: props }])
     }
-        useEffect(() => {
-            localStorage.setItem('items', JSON.stringify(datarr));
-        },[datarr]);
-        
+
+    useEffect(() => {
+        localStorage.setItem('hyeta', JSON.stringify(datarr))
+    }, [datarr])
 
     // useEffect(() => {
     //     const items = JSON.parse(localStorage.getItem('items'));
@@ -24,13 +29,14 @@ function App() {
             .then((resp) => resp.json())
             .then((data) => setData(data));
     }, []);
-    useEffect(()=>{document.title = 'rjs-localStorage'},[])
+    useEffect(() => {
+        document.title = 'rjs-localStorage';
+    }, []);
 
     return (
-
         <div className='App'>
             {data.map((el) => {
-              return  <Item key={el.id} {...el} AddLocalSt={AddLocalSt}/>
+                return <Item key={el.id} {...el} AddLocalSt={AddLocalSt} />;
             })}
         </div>
     );
