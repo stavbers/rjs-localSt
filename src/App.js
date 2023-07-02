@@ -10,8 +10,10 @@ function App() {
             .then((resp) => resp.json())
             .then((data) => setData(data));
     }, []);
+    useEffect(()=>{document.title = 'rjs-localStorage'},[])
 
     return (
+
         <div className='App'>
             {data.map((el) => {
               return  <Item key={el.id} {...el}/>
